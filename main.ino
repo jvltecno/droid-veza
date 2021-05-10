@@ -89,7 +89,7 @@ double computePID(double inp){
 //-------------------------------Variables-------------------------------------------------------------------------------------
 float mash [2][3];
 float temp;
-float tempCleanign;
+float tempWashing;
 float tempLevature;
 byte timeHervor;
 byte timeAddit [5];
@@ -120,6 +120,9 @@ void mash(){
 
 }
 
+void boil (){
+
+}
 //-------------------------------Lcd--------------------------------------------------------------------------------------------
 
 void print (int i , int in[1]){
