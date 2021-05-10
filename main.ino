@@ -11,9 +11,9 @@ char frases[59][35]={
     {"       !vamos a    programar¡   "},
     {"   cuantas etapas   de mash?    "},
     {"    mash 1      temp=  tiempo=  "},
-    {"    mash 1      temp=  tiempo=  "},
-    {"    mash 1      temp=  tiempo=  "},
-    {"    mash 1      temp=  tiempo=  "},
+    {"    mash 2      temp=  tiempo=  "},
+    {"    mash 3      temp=  tiempo=  "},
+    {"    mash 4      temp=  tiempo=  "},
     {" temp de lavado?      temp=     "},
     {"   agregados      de lupulos?   "},
     {" agregado numero 1     tiempo=  "},
@@ -66,10 +66,7 @@ char frases[59][35]={
     {},
     {},
     {},
-    {}
-    };
-//------------------------------PID-------------------------------------------------------------------------------------------
-
+};    
 double computePID(double inp){     
     currentTime = millis();                               // obtener el tiempo actual
     elapsedTime = (double)(currentTime - previousTime);     // calcular el tiempo transcurrido
