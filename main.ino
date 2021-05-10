@@ -4,15 +4,6 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);  // Inicia el LCD en la dirección 0x27, con 16 caracteres y 2 líneas
 
-//-------------------------------Char Specified-------------------------------------------------------------------------------
-
-//-------------------------------Variables-------------------------------------------------------------------------------------
-float mash [2][3];
-float temp;
-float tempCleanign;
-float tempLevature;
-byte timeHervor;
-byte timeAddit [5];
 
 //-------------------------------Constantes------------------------------------------------------------------------------------
 char frases[59][35]={
@@ -95,6 +86,18 @@ double computePID(double inp){
     return output;
 }
 
+
+//-------------------------------Char Specified-------------------------------------------------------------------------------
+
+//-------------------------------Variables-------------------------------------------------------------------------------------
+float mash [2][3];
+float temp;
+float tempCleanign;
+float tempLevature;
+byte timeHervor;
+byte timeAddit [5];
+
+
 //app
 void setup(){
 	lcd.begin();                      
@@ -109,15 +112,16 @@ void setup(){
  
 void loop(){
    
-   pidController.Compute();
-   
-   Input = analogRead(PIN_INPUT);         // leer una entrada del controlador
-   Output = computePID(Input);      // calcular el controlador
-   delay(100);
-   analogWrite(PIN_OUTPUT, Output);         // escribir la salida del controlador
+   mash();
+   hervor();
+
 }
 
 /*-------------------------------Functions------------------------------------------------------------------------------------*/
+
+void mash(){
+
+}
 
 //-------------------------------Lcd--------------------------------------------------------------------------------------------
 
@@ -129,4 +133,12 @@ void print (int i , int in[1]){
 //--------------------------------Termocupla-------------------------------------------------------------------------------------
 void tempConcurrent(){
     temp=;//revisar termocupla
+}
+
+bool time (int timeObj){
+    time=millis()/1000/60;
+    if (time-timeObj<=0){
+        return true;
+    }
+    return false;
 }
