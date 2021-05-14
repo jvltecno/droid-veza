@@ -73,20 +73,8 @@ void boil (){
 
 //-------------------------------Lcd--------------------------------------------------------------------------------------------
 
-void print (int i , int in[1]){
-    lcd.setCursor(in[0],in[1]);
-    lcd.print(frases[i]);
-}
-
 //--------------------------------Termocupla-------------------------------------------------------------------------------------
 void tempConcurrent(){
     temp=;//revisar termocupla
 }
 
-bool time (int timeObj){
-    time=millis()/1000/60;
-    if (time-timeObj<=0){
-        return true;
-    }
-    return false;
-}
