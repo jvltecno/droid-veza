@@ -6,22 +6,6 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);  // Inicia el LCD en la dirección 0x27, con
 
 
 //-------------------------------Constantes------------------------------------------------------------------------------------
-double computePID(double inp){     
-    currentTime = millis();                               // obtener el tiempo actual
-    elapsedTime = (double)(currentTime - previousTime);     // calcular el tiempo transcurrido
-        
-    error = Setpoint - Input;                               // determinar el error entre la consigna y la medición
-    cumError += error * elapsedTime;                      // calcular la integral del error
-    rateError = (error - lastError) / elapsedTime;         // calcular la derivada del error
- 
-    double output = kp*error + ki*cumError + kd*rateError;     // calcular la salida del PID
- 
-    lastError = error;                                      // almacenar error anterior
-    previousTime = currentTime;                             // almacenar el tiempo anterior
- 
-    return output;
-}
-
 
 //-------------------------------Char Specified-------------------------------------------------------------------------------
 
@@ -39,8 +23,6 @@ void setup(){
 	lcd.begin();                      
 	lcd.backlight();
 
-    Input = analogRead(PIN_INPUT);
-   Setpoint = 100;
 
 	delay(2500);
 }
