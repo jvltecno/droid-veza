@@ -6,67 +6,6 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);  // Inicia el LCD en la dirección 0x27, con
 
 
 //-------------------------------Constantes------------------------------------------------------------------------------------
-char frases[59][35]={
-    {"  !Bienvenido¡  iniciando...    "},
-    {"       !vamos a    programar¡   "},
-    {"   cuantas etapas   de mash?    "},
-    {"    mash 1      temp=  tiempo=  "},
-    {"    mash 2      temp=  tiempo=  "},
-    {"    mash 3      temp=  tiempo=  "},
-    {"    mash 4      temp=  tiempo=  "},
-    {" temp de lavado?      temp=     "},
-    {"   agregados      de lupulos?   "},
-    {" agregado numero 1     tiempo=  "},
-    {" agregado numero 2     tiempo=  "},
-    {" agregado numero 3     tiempo=  "},
-    {" agregado numero 4     tiempo=  "},
-    {" agregado numero 5     tiempo=  "},
-    {" cuanto tiempo  hervor tiempo=  "},
-    {"   todo listo?                  "},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-};    
 double computePID(double inp){     
     currentTime = millis();                               // obtener el tiempo actual
     elapsedTime = (double)(currentTime - previousTime);     // calcular el tiempo transcurrido
@@ -87,7 +26,7 @@ double computePID(double inp){
 //-------------------------------Char Specified-------------------------------------------------------------------------------
 
 //-------------------------------Variables-------------------------------------------------------------------------------------
-float mash [2][3];
+float mash[];
 float temp;
 float tempWashing;
 float tempLevature;
@@ -108,21 +47,30 @@ void setup(){
 
  
 void loop(){
-   
+   set();
    mash();
-   hervor();
+   boil();
 
 }
 
 /*-------------------------------Functions------------------------------------------------------------------------------------*/
+void set(){
+    lcd.setCursor(0,0);
+    lcd.print("   Bienvenido   ");
+    lcd.setCursor(0,1);
+    lcd.print(" a Droid-veza   ");
 
+}
 void mash(){
-
+    if(timeMeter-)
 }
 
 void boil (){
 
 }
+
+
+
 //-------------------------------Lcd--------------------------------------------------------------------------------------------
 
 void print (int i , int in[1]){
