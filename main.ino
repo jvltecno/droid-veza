@@ -2,14 +2,7 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
-LiquidCrystal_I2C lcd(0x27, 16, 2);  // Inicia el LCD en la dirección 0x27, con 16 caracteres y 2 líneas
-
-
-//------------------------------Constantes------------------------------------------------------------------------------------
-
-//-------------------------------Char Specified-------------------------------------------------------------------------------
-
-//-------------------------------Variables-------------------------------------------------------------------------------------
+LiquidCrystal_I2C lcd(0x27, 16, 2);  // Inicia el LCD en la dirección 0x27, con 16 caracteres y 2 filas
 float mash[4][4];
 float temp;
 float tempWash;
@@ -56,7 +49,7 @@ void mash(){
 xTime=mash[][];
 xTemp=mash[][];
 
-if(timeMeasured<xTime){
+while(timeMeasured<xTime){
     If(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
        timeMeasured++;
        timeInit=timeConcurrent;
@@ -76,8 +69,31 @@ if(timeMeasured<xTime){
 
 }
 }
+}
 
 /----------------------------------------------
 void boil (){
+xTime=timeBoil;
+xTemp=tempBoil;
+
+while(timeMeasured<xTime){
+    If(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
+       timeMeasured++;
+       timeInit=timeConcurrent;
+
+Lcd.cursor(0,0); // muestra datos
+       Lcd.print("Time=");
+       Lcd.print(timeMessured);
+       Lcd.cursor(0,9);
+       Lcd.print("TimO=");
+       Lcd.print(xTime);
+       Lcd.cursor(1,0);
+       Lcd.print("Temp=");
+       Lcd.print(temp);
+       Lcd.cursor(0,9);
+       Lcd.print("TemO=");
+       Lcd.print(xTemp);
+}
+}
 }
 
