@@ -45,9 +45,33 @@ void set(){
 }
 /--------------------------------------------
 void mash(){
+
+for(mash=1,mash=z,mash+){ //mash x es la cantidad 
+                          //maxima de etapas elegidas
     
 xTime=mash[][];
 xTemp=mash[][];
+
+while(temp<xTemp){
+     Lcd.clear();
+     Lcd.cursor(0.0);
+     Lcd.print("Subiendo Temp.");
+     Lcd.cursor(1,0);
+     Lcd.print("Temp=");
+     Lcd.print(temp);
+     Lcd.cursor(0,9);
+     Lcd.print("TemO=");
+     Lcd.print(xTemp);
+     delay=1000;
+}
+
+     Lcd.clear();
+     Lcd.print('Iniciando Etapa");
+     Lcd.cursor(1,0);
+     Lcd.print("Mash:");
+     Lcd print(mashx);
+     delay(2000);
+     Lcd.clear();
 
 while(timeMeasured<xTime){
     If(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
@@ -96,4 +120,4 @@ Lcd.cursor(0,0); // muestra datos
 }
 }
 }
-
+}
