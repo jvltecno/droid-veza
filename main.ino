@@ -10,6 +10,7 @@ float tempTrans;
 byte timeBoil;
 byte timeAddit [5];
 float tempBoil=100;
+byte mashx;  //cantidad de etapas de mash
 
 int timeInit=0;
 int timeCurrent=millis()/1000;
@@ -46,7 +47,7 @@ void set(){
 /--------------------------------------------
 void mash(){
 
-for(mash=1,mash=z,mash+){ //mash x es la cantidad 
+for(mashx=1,mashx,mash++){ //mashx es la cantidad 
                           //maxima de etapas elegidas
     
 xTime=mash[][];
