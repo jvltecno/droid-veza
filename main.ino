@@ -3,7 +3,7 @@
 #include <LiquidCrystal_I2C.h>
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);  // Inicia el LCD en la dirección 0x27, con 16 caracteres y 2 filas
-float mash[4][4];
+float mash[4][4];//primer valor para temp, segundo para tiempo
 float temp;
 float tempWash;
 float tempTrans;
@@ -47,11 +47,11 @@ void set(){
 /--------------------------------------------
 void mash(){
 
-for(byte i=1;i<=xmash,i++){ //xmash es la cantidad 
+for(byte i=0;i<=xmash,i++){ //xmash es la cantidad 
                           //maxima de etapas elegidas
-    
-xTime=mash[][];
-xTemp=mash[][];
+byte y=i+1 
+xTemp=mash[i][i];
+xTime=mash[i][y];
 
 while(temp<xTemp){
      Lcd.clear();
@@ -70,7 +70,7 @@ while(temp<xTemp){
      Lcd.print('Iniciando Etapa");
      Lcd.cursor(1,0);
      Lcd.print("Mash:");
-     Lcd print(mashx);
+     Lcd print(y);
      delay(2000);
      Lcd.clear();
 
@@ -122,8 +122,17 @@ Lcd.cursor(0,0); // muestra datos
 }
 }
 }
+
 /----------------------------------------------
 
 void cooler(){
 }
+
+/---------------------------------------------
+
+void buzzer(){
+}
+
+/---------------------------------------------
+
 
