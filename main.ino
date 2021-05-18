@@ -10,6 +10,7 @@ float tempTrans;
 byte timeBoil;
 byte timeAddit [5];
 float tempBoil=100;
+byte xmash;
 
 int timeInit=0;
 int timeCurrent=millis()/1000;
@@ -32,7 +33,7 @@ void loop(){
    set();
    mash();
    boil();
-
+   cooler();
 }
 
 /*-------------------------------Functions------------------------------------------------------------------------------------*/
@@ -46,7 +47,7 @@ void set(){
 /--------------------------------------------
 void mash(){
 
-for(mash=1,mash=z,mash+){ //mash x es la cantidad 
+for(byte i=1;i<=xmash,i++){ //xmash es la cantidad 
                           //maxima de etapas elegidas
     
 xTime=mash[][];
@@ -96,7 +97,7 @@ while(timeMeasured<xTime){
 }
 
 /----------------------------------------------
-void boil (){
+void boil(){
 xTime=timeBoil;
 xTemp=tempBoil;
 
@@ -121,3 +122,8 @@ Lcd.cursor(0,0); // muestra datos
 }
 }
 }
+/----------------------------------------------
+
+void cooler(){
+}
+
