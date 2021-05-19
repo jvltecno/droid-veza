@@ -101,10 +101,54 @@ void boil(){
 xTime=timeBoil;
 xTemp=tempBoil;
 
+while(temp<xTemp){
+     Lcd.clear();
+     Lcd.cursor(0.0);
+     Lcd.print("Subiendo Temp.");
+     Lcd.cursor(1,0);
+     Lcd.print("Temp=");
+     Lcd.print(temp);
+     Lcd.cursor(0,9);
+     Lcd.print("TemO=");
+     Lcd.print(xTemp);
+     delay=1000;
+}
+
+     Lcd.clear();
+     Lcd.print('Iniciando Etapa");
+     Lcd.cursor(1,0);
+     Lcd.print("Mash:");
+     Lcd print(y);
+     delay(2000);
+     Lcd.clear();
+
+
 while(timeMeasured<xTime){
     If(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
        timeMeasured++;
        timeInit=timeConcurrent;
+
+    switch(timeMeasured){   // controla el tiwmpo de                      
+           case=timeAddit[0]  // las adiciones
+           Lcd.clear();
+           Lcd.print("Adicción 1");
+           break;
+           case=timeAddit[1]
+           Lcd.clear();
+           Lcd.print("Adición 2");
+           break;
+           case=timeAddit[2]
+           Lcd.clear();
+           Lcd.print("Adición 3");
+           break;
+           case=timeAddit[3]
+           Lcd.clear();
+           Lcd.print("Adición 4");
+           break;
+           case=timeAddit[4]
+           Lcd.clear();
+           Lcd.print("Adicion 5");
+           break;
 
 Lcd.cursor(0,0); // muestra datos
        Lcd.print("Time=");
@@ -113,11 +157,8 @@ Lcd.cursor(0,0); // muestra datos
        Lcd.print("TimO=");
        Lcd.print(xTime);
        Lcd.cursor(1,0);
-       Lcd.print("Temp=");
-       Lcd.print(temp);
-       Lcd.cursor(0,9);
-       Lcd.print("TemO=");
-       Lcd.print(xTemp);
+       Lcd.print(Etapa Hervido");
+       
 }
 }
 }
