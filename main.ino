@@ -80,11 +80,11 @@ while(timeMeasured<xTime){
        timeInit=timeConcurrent;
 
        Lcd.cursor(0,0); // muestra datos
-       Lcd.print("Time=");
-       Lcd.print(timeMessured);
+       Lcd.print("Etapa");
+       Lcd.print(y);
        Lcd.cursor(0,9);
-       Lcd.print("TimO=");
-       Lcd.print(xTime);
+       Lcd.print("Time:");
+       Lcd.print(timeMessured);
        Lcd.cursor(1,0);
        Lcd.print("Temp=");
        Lcd.print(temp);
