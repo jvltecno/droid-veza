@@ -24,9 +24,10 @@ void setup(){
         pinMode(buzzer, OUTPUT);
 	lcd.begin();                      
 	lcd.backlight();
+        Lcd.print("Iniciando...");
 
 
-	delay(2500);
+	delay(5000);
 }
 
  
@@ -43,6 +44,11 @@ void set(){
     lcd.print("   Bienvenido   ");
     lcd.setCursor(0,1);
     lcd.print(" a Droid-veza   ");
+    delay(5000);
+    Lcd.print("Ingrese el agua,");
+    Lcd.cursor(1,0);
+    Lcd.print("luego oprima OK");
+   
 
 }
 /--------------------------------------------
@@ -74,6 +80,8 @@ while(temp<xTemp){
      Lcd print(y);
      delay(2000);
      Lcd.clear();
+
+     alert();
 
 while(timeMeasured<xTime){
     If(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
@@ -133,22 +141,27 @@ while(timeMeasured<xTime){
            case=timeAddit[0]  // las adiciones
            Lcd.clear();
            Lcd.print("Adicción 1");
+           alert();
            break;
            case=timeAddit[1]
            Lcd.clear();
            Lcd.print("Adición 2");
+           alert();
            break;
            case=timeAddit[2]
            Lcd.clear();
            Lcd.print("Adición 3");
+           alert();
            break;
            case=timeAddit[3]
            Lcd.clear();
            Lcd.print("Adición 4");
+           alert();
            break;
            case=timeAddit[4]
            Lcd.clear();
            Lcd.print("Adicion 5");
+           alert();
            break;
 
 Lcd.cursor(0,0); // muestra datos
@@ -187,6 +200,10 @@ void alert(){
 
 void alarm(){
 
+   for(int i,i=30,i++){
+       tone(buzzer,1760,250);
+       delay(400);
+}
 }
 
 
