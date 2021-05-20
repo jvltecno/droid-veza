@@ -87,6 +87,8 @@ while(timeMeasured<xTime){
     If(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
        timeMeasured++;
        timeInit=timeConcurrent;
+      
+       PID();
 
        Lcd.cursor(0,0); // muestra datos
        Lcd.print("Etapa");
@@ -136,6 +138,8 @@ while(timeMeasured<xTime){
     If(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
        timeMeasured++;
        timeInit=timeConcurrent;
+
+           PID();
 
     switch(timeMeasured){   // controla el tiwmpo de                      
            case=timeAddit[0]  // las adiciones
@@ -202,6 +206,7 @@ void alarm(){
 
    for(int i,i=30,i++){
        tone(buzzer,1760,250);
+       tone(buzzer,220,250);
        delay(400);
 }
 }
