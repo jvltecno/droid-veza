@@ -3,7 +3,10 @@
 #include <LiquidCrystal_I2C.h>
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);  // Inicia el LCD en la dirección 0x27, con 16 caracteres y 2 filas
-float mash[4][4];//primer valor para temp, segundo para tiempo
+
+
+byte mashTime[4];
+byte mashTemp[4];
 float temp;
 float tempWash;
 float tempTrans;
@@ -12,11 +15,14 @@ byte timeAddit [5];
 float tempBoil=100;
 byte xmash;
 
+//timming
 int timeInit=0;
 int timeCurrent=millis()/1000;
 int timeMeasured=0;
 byte xTime=0;
 byte xTemp=0;
+
+//pins
 int buzzer=11;
 
 //app
@@ -54,14 +60,14 @@ void set(){
 /--------------------------------------------
 void mash(){
 
-for(byte i=0;i<=xmash,i++){ //xmash es la cantidad 
+	for(byte i=0;i<=xmash,i++){ //xmash es la cantidad 
                           //maxima de etapas elegidas
-byte y=i+1 
-xTemp=mash[i][i];
-xTime=mash[i][y];
+	byte y=i+1 
+	xTemp=mash[i][i];
+	xTime=mash[i][y];
 
 while(temp<xTemp){
-     Lcd.clear();
+	Lcd.clear();
      Lcd.cursor(0.0);
      Lcd.print("Subiendo Temp.");
      Lcd.cursor(1,0);
@@ -81,30 +87,30 @@ while(temp<xTemp){
      delay(2000);
      Lcd.clear();
 
-     alert();
-
-while(timeMeasured<xTime){
-    If(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
-       timeMeasured++;
-       timeInit=timeConcurrent;
+        alert();
+	       
+	while(timeMeasured<xTime){
+  	  if(timeConcurrent-timeInit<1){ //mide tiempo trnascurrido del proceso
+       		timeMeasured++;
+       		timeInit=timeConcurrent;
       
-       PID();
+     	        PID();
+		// muesra datos
+       		Lcd.cursor(0,0); 
+       		Lcd.print("Etapa");
+       		Lcd.print(y);
+       		Lcd.cursor(0,9);
+       		Lcd.print("Time:");
+       		Lcd.print(timeMessured);
+    	        Lcd.cursor(1,0);
+       		Lcd.print("Temp=");
+       		Lcd.print(temp);
+       		Lcd.cursor(0,9);
+      	        Lcd.print("TemO=");
+      	        Lcd.print(xTemp);
 
-       Lcd.cursor(0,0); // muestra datos
-       Lcd.print("Etapa");
-       Lcd.print(y);
-       Lcd.cursor(0,9);
-       Lcd.print("Time:");
-       Lcd.print(timeMessured);
-       Lcd.cursor(1,0);
-       Lcd.print("Temp=");
-       Lcd.print(temp);
-       Lcd.cursor(0,9);
-       Lcd.print("TemO=");
-       Lcd.print(xTemp);
-
-}
-}
+    	}
+  }
 }
 
 /----------------------------------------------
@@ -112,7 +118,7 @@ void boil(){
 xTime=timeBoil;
 xTemp=tempBoil;
 
-while(temp<xTemp){
+while(temp <= xTemp){
      Lcd.clear();
      Lcd.cursor(0.0);
      Lcd.print("Subiendo Temp.");
@@ -126,7 +132,7 @@ while(temp<xTemp){
 }
 
      Lcd.clear();
-     Lcd.print('Iniciando Etapa");
+     Lcd.print("Iniciando Etapa");
      Lcd.cursor(1,0);
      Lcd.print("Mash:");
      Lcd print(y);
