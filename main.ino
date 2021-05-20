@@ -17,10 +17,11 @@ int timeCurrent=millis()/1000;
 int timeMeasured=0;
 byte xTime=0;
 byte xTemp=0;
-
+int buzzer=11;
 
 //app
 void setup(){
+        pinMode(buzzer, OUTPUT);
 	lcd.begin();                      
 	lcd.backlight();
 
@@ -171,9 +172,21 @@ void cooler(){
 
 /---------------------------------------------
 
-void buzzer(){
+void alert(){
+           tone(buzzer,880,500);
+           delay(750);
+           tone(buzzer,880,500);
+           delay(750);
+           tone(buzzer,440,2000);
+           delay(2250);
+           tone(buzzer,1760,250);
+           noTone(buzzer);
 }
 
 /---------------------------------------------
+
+void alarm(){
+
+}
 
 
