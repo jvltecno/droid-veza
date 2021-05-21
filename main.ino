@@ -64,8 +64,8 @@ void mash(){
 	for(byte i=0;i<=xmash,i++){ //xmash es la cantidad 
                           //maxima de etapas elegidas
 	byte y=i+1 
-	xTemp=mash[i][i];
-	xTime=mash[i][y];
+	xTemp=mash[i];
+	xTime=mash[i];
 
 while(temp<xTemp){
 	Lcd.clear();
@@ -168,31 +168,31 @@ while(timeMeasured<xTime){
            PID();
 
     switch(timeMeasured){   // controla el tiwmpo de                      
-           case=timeAddit[0]  // las adiciones
-           Lcd.clear();
-           Lcd.print("Adicción 1");
-           alert();
-           break;
-           case=timeAddit[1]
-           Lcd.clear();
-           Lcd.print("Adición 2");
-           alert();
-           break;
-           case=timeAddit[2]
-           Lcd.clear();
-           Lcd.print("Adición 3");
-           alert();
-           break;
-           case=timeAddit[3]
-           Lcd.clear();
-           Lcd.print("Adición 4");
-           alert();
-           break;
-           case=timeAddit[4]
-           Lcd.clear();
-           Lcd.print("Adicion 5");
-           alert();
-           break;
+           case timeAddit[0]:  // las adiciones
+                Lcd.clear();
+                Lcd.print("Adicción 1");
+                alert();
+                break;
+           case timeAddit[1]:
+                Lcd.clear();
+                Lcd.print("Adición 2");
+                alert();
+                break;
+           case timeAddit[2]:
+                Lcd.clear();
+                Lcd.print("Adición 3");
+                alert();
+                break;
+           case timeAddit[3]:
+                Lcd.clear();
+                Lcd.print("Adición 4");
+                alert();
+                break;
+           case timeAddit[4]:
+                Lcd.clear();
+                Lcd.print("Adicion 5");
+                alert();
+                break;
 
 Lcd.cursor(0,0); // muestra datos
        Lcd.print("Time=");
