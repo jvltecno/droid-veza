@@ -12,7 +12,6 @@ float tempWash;
 float tempTrans;
 byte timeBoil;
 byte timeAddit [5];
-float tempBoil=100;
 byte xmash;
 
 //timming
@@ -23,7 +22,7 @@ byte xTime=0;
 byte xTemp=0;
 
 //pins
-int buzzer=11;
+byte buzzer=11;
 
 //app
 void setup(){
@@ -58,117 +57,116 @@ void set(){
    
 
 }
-/--------------------------------------------
-void mash(){
-
-	for(byte i=0;i<=xmash,i++){ //xmash es la cantidad 
-                          //maxima de etapas elegidas
-	byte y=i+1 
-	xTemp=mash[i];
-	xTime=mash[i];
-
-while(temp<xTemp){
-	Lcd.clear();
-     Lcd.cursor(0.0);
-     Lcd.print("Subiendo Temp.");
-     Lcd.cursor(1,0);
-     Lcd.print("Temp=");
-     Lcd.print(temp);
-     Lcd.cursor(0,9);
-     Lcd.print("TemO=");
-     Lcd.print(xTemp);
-     delay=1000;
+void PID(){
+    
 }
+//--------------------------------------------
+void mash(){
+	for(byte i=0;i<=xmash,i++){ //xmash es la cantidad 
+    //maxima de etapas elegidas 
+        xTemp=mashTemp[i];
+        xTime=mashTime[i];
+        while(temp<xTemp){
+    	    Lcd.clear();
+            Lcd.cursor(0.0);
+            Lcd.print("Subiendo Temp.");
+            PID(xtemp);
+            Lcd.cursor(1,0);
+            Lcd.print("Temp=");
+            Lcd.print(temp);
+            Lcd.cursor(0,9);
+            Lcd.print("TemO=");
+            Lcd.print(xTemp);
+            delay(1000);
+        }
+        Lcd.clear();
+        Lcd.print("Por favor");
+        Lcd.cursor(1,0);
+        Lcd.print("encender Bomba");
 
-    if(temp=mash[0][0]){
-       Lcd.clear();
-       Lcd.print("Por favor");
-       Lcd.cursor(1,0);
-       Lcd print("encender Bomba");
-
-     Lcd.clear();
-     Lcd.print("Iniciando Etapa");
-     Lcd.cursor(1,0);
-     Lcd.print("Mash:");
-     Lcd print(y);
-     delay(2000);
-     Lcd.clear();
+        Lcd.clear();
+        Lcd.print("Iniciando Etapa");
+        Lcd.cursor(1,0);
+        Lcd.print("Mash:");
+        Lcd.print(y);
+        delay(2000);
+        Lcd.clear();
 
         alert();
 	       
-	while(timeMeasured<xTime){
-  	  if(timeConcurrent-timeInit<1){ //mide tiempo trnascurrido del proceso
-       		timeMeasured++;
-       		timeInit=timeConcurrent;
+	    while(timeMeasured<=xTime){
+  	        if(timeConcurrent-timeInit<1){ //mide tiempo trnascurrido del proceso
+       		    timeMeasured++;
+       		    timeInit=timeConcurrent;
       
      	        PID();
-		// muesra datos
-       		Lcd.cursor(0,0); 
-       		Lcd.print("Etapa");
-       		Lcd.print(y);
-       		Lcd.cursor(0,9);
-       		Lcd.print("Time:");
-       		Lcd.print(timeMessured);
+		    // muesra datos
+       		    Lcd.cursor(0,0); 
+       		    Lcd.print("Etapa");
+       		    Lcd.print(y);
+       		    Lcd.cursor(0,9);
+       		    Lcd.print("Time:");
+       		    Lcd.print(timeMessured);
     	        Lcd.cursor(1,0);
-       		Lcd.print("Temp=");
-       		Lcd.print(temp);
-       		Lcd.cursor(0,9);
+       		    Lcd.print("Temp=");
+       		    Lcd.print(temp);
+       		    Lcd.cursor(0,9);
       	        Lcd.print("TemO=");
       	        Lcd.print(xTemp);
 
-    	}
-  }
+    	    }
+            PID();
+        }
+    }
 }
 
 
-/----------------------------------------------
+//----------------------------------------------
 
 void mashOut(){
 
 }
 
-/----------------------------------------------
+//----------------------------------------------
 void boil(){
-xTime=timeBoil;
-xTemp=tempBoil;
+    xTime=timeBoil;
 
-       Lcd.clear();
-       Lcd.print("Por favor");
-       Lcd.cursor(1,0);
-       Lcd print("apagar Bomba");
-
-
-while(temp <= xTemp){
-     Lcd.clear();
-     Lcd.cursor(0.0);
-     Lcd.print("Subiendo Temp.");
-     Lcd.cursor(1,0);
-     Lcd.print("Temp=");
-     Lcd.print(temp);
-     Lcd.cursor(0,9);
-     Lcd.print("TemO=");
-     Lcd.print(xTemp);
-     delay=1000;
-}
-
-     Lcd.clear();
-     Lcd.print("Iniciando Etapa");
-     Lcd.cursor(1,0);
-     Lcd.print("Hervido");
-     Lcd print(y);
-     delay(2000);
-     Lcd.clear();
+    Lcd.clear();
+    Lcd.print("Por favor");
+    Lcd.cursor(1,0);
+    Lcd print("apagar Bomba");
 
 
-while(timeMeasured<xTime){
-    if(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
-       timeMeasured++;
-       timeInit=timeConcurrent;
+    while(temp <= 100){
+        Lcd.clear();
+        Lcd.cursor(0.0);
+        Lcd.print("Subiendo Temp.");
+        Lcd.cursor(1,0);
+        Lcd.print("Temp=");
+        Lcd.print(temp);
+        Lcd.cursor(0,9);
+        Lcd.print("TemO=");
+        Lcd.print(xTemp);
+    }
 
-           PID();
+        Lcd.clear();
+        Lcd.print("Iniciando Etapa");
+        Lcd.cursor(1,0);
+        Lcd.print("Hervido");
+        Lcd print(y);
+        delay(2000);
+        Lcd.clear();
 
-    switch(timeMeasured){   // controla el tiwmpo de                      
-           case timeAddit[0]:  // las adiciones
+
+    while(timeMeasured<xTime){
+        if(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
+            timeMeasured++;
+            timeInit=timeConcurrent;
+
+            PID();
+
+            switch(timeMeasured){   // controla el tiwmpo de                      
+                case timeAddit[0]:  // las adiciones
                 Lcd.clear();
                 Lcd.print("Adicción 1");
                 alert();
@@ -193,49 +191,47 @@ while(timeMeasured<xTime){
                 Lcd.print("Adicion 5");
                 alert();
                 break;
-
-Lcd.cursor(0,0); // muestra datos
-       Lcd.print("Time=");
-       Lcd.print(timeMessured);
-       Lcd.cursor(0,9);
-       Lcd.print("TimO=");
-       Lcd.print(xTime);
-       Lcd.cursor(1,0);
-       Lcd.print("
-Etapa Hervido");
+            }
+        Lcd.cursor(0,0); // muestra datos
+        Lcd.print("Time=");
+        Lcd.print(timeMessured);
+        Lcd.cursor(0,9);
+        Lcd.print("TimO=");
+        Lcd.print(xTime);
+        Lcd.cursor(1,0);
+        Lcd.print("Etapa Hervido");
        
-}
-}
-}
+        
+        }
+    }
 }
 
-/----------------------------------------------
+//----------------------------------------------
 
 void cooler(){
 }
 
-/---------------------------------------------
+//---------------------------------------------
 
 void alert(){
-           tone(buzzer,880,500);
-           delay(750);
-           tone(buzzer,880,500);
-           delay(750);
-           tone(buzzer,440,2000);
-           delay(2250);
-           tone(buzzer,1760,250);
-           noTone(buzzer);
+    tone(buzzer,880,500);
+    delay(750);
+    tone(buzzer,880,500);
+    delay(750);
+    tone(buzzer,440,2000);
+    delay(2250);
+    tone(buzzer,1760,250);
+    noTone(buzzer);
 }
 
-/---------------------------------------------
+//---------------------------------------------
 
 void alarm(){
-
    for(int i,i=30,i++){
        tone(buzzer,1760,250);
        tone(buzzer,220,250);
        delay(400);
-}
+    }
 }
 
 
