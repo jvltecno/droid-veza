@@ -80,14 +80,14 @@ while(temp<xTemp){
      delay=1000;
 }
 
-    If(temp=mash[0][0]){
+    if(temp=mash[0][0]){
        Lcd.clear();
        Lcd.print("Por favor");
        Lcd.cursor(1,0);
        Lcd print("encender Bomba");
 
      Lcd.clear();
-     Lcd.print('Iniciando Etapa");
+     Lcd.print("Iniciando Etapa");
      Lcd.cursor(1,0);
      Lcd.print("Mash:");
      Lcd print(y);
@@ -161,7 +161,7 @@ while(temp <= xTemp){
 
 
 while(timeMeasured<xTime){
-    If(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
+    if(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
        timeMeasured++;
        timeInit=timeConcurrent;
 
