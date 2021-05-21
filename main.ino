@@ -201,7 +201,8 @@ Lcd.cursor(0,0); // muestra datos
        Lcd.print("TimO=");
        Lcd.print(xTime);
        Lcd.cursor(1,0);
-       Lcd.print(Etapa Hervido");
+       Lcd.print("
+Etapa Hervido");
        
 }
 }
