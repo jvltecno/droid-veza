@@ -40,6 +40,7 @@ void setup(){
 void loop(){
    set();
    mash();
+   mashOut();
    boil();
    cooler();
 }
@@ -79,6 +80,12 @@ while(temp<xTemp){
      delay=1000;
 }
 
+    If(temp=mash[0][0]){
+       Lcd.clear();
+       Lcd.print("Por favor");
+       Lcd.cursor(1,0);
+       Lcd print("encender Bomba");
+
      Lcd.clear();
      Lcd.print('Iniciando Etapa");
      Lcd.cursor(1,0);
@@ -113,10 +120,23 @@ while(temp<xTemp){
   }
 }
 
+
+/----------------------------------------------
+
+void mashOut(){
+
+}
+
 /----------------------------------------------
 void boil(){
 xTime=timeBoil;
 xTemp=tempBoil;
+
+       Lcd.clear();
+       Lcd.print("Por favor");
+       Lcd.cursor(1,0);
+       Lcd print("apagar Bomba");
+
 
 while(temp <= xTemp){
      Lcd.clear();
@@ -134,7 +154,7 @@ while(temp <= xTemp){
      Lcd.clear();
      Lcd.print("Iniciando Etapa");
      Lcd.cursor(1,0);
-     Lcd.print("Mash:");
+     Lcd.print("Hervido");
      Lcd print(y);
      delay(2000);
      Lcd.clear();
