@@ -11,7 +11,7 @@ float temp;
 float tempWash;
 float tempTrans;
 byte timeBoil;
-byte timeAddit [5];
+byte timeAddit []={255,255,255,255,255};
 byte xmash;
 
 //timming
@@ -79,16 +79,20 @@ void mash(){
             Lcd.print(xTemp);
             delay(1000);
         }
-        Lcd.clear();
-        Lcd.print("Por favor");
-        Lcd.cursor(1,0);
-        Lcd.print("encender Bomba");
+        if (xmash==0)
+        {
+            Lcd.clear();
+            Lcd.print("Por favor");
+            Lcd.cursor(1,0);
+            Lcd.print("encender Bomba");
 
+        }
+        
         Lcd.clear();
         Lcd.print("Iniciando Etapa");
         Lcd.cursor(1,0);
         Lcd.print("Mash:");
-        Lcd.print(y);
+        Lcd.print(i++);
         delay(2000);
         Lcd.clear();
 
@@ -99,8 +103,7 @@ void mash(){
        		    timeMeasured++;
        		    timeInit=timeConcurrent;
       
-     	        PID();
-		    // muesra datos
+		        // muesra datos
        		    Lcd.cursor(0,0); 
        		    Lcd.print("Etapa");
        		    Lcd.print(y);
@@ -137,7 +140,7 @@ void boil(){
     Lcd print("apagar Bomba");
 
 
-    while(temp <= 100){
+    while(temp < 100){
         Lcd.clear();
         Lcd.cursor(0.0);
         Lcd.print("Subiendo Temp.");
@@ -158,48 +161,63 @@ void boil(){
         Lcd.clear();
 
 
-    while(timeMeasured<xTime){
-        if(timeConcurrent-timeInit<1){ /mide tiempo trnascurrido del proceso
+    while(timeMeasured<=xTime){
+        if(timeConcurrent-timeInit<1){ //mide tiempo trnascurrido del proceso
             timeMeasured++;
             timeInit=timeConcurrent;
 
-            PID();
-
-            switch(timeMeasured){   // controla el tiwmpo de                      
-                case timeAddit[0]:  // las adiciones
-                Lcd.clear();
-                Lcd.print("Adicción 1");
-                alert();
-                break;
-           case timeAddit[1]:
-                Lcd.clear();
-                Lcd.print("Adición 2");
-                alert();
-                break;
-           case timeAddit[2]:
-                Lcd.clear();
-                Lcd.print("Adición 3");
-                alert();
-                break;
-           case timeAddit[3]:
-                Lcd.clear();
-                Lcd.print("Adición 4");
-                alert();
-                break;
-           case timeAddit[4]:
-                Lcd.clear();
-                Lcd.print("Adicion 5");
-                alert();
-                break;
-            }
-        Lcd.cursor(0,0); // muestra datos
-        Lcd.print("Time=");
-        Lcd.print(timeMessured);
-        Lcd.cursor(0,9);
-        Lcd.print("TimO=");
-        Lcd.print(xTime);
-        Lcd.cursor(1,0);
-        Lcd.print("Etapa Hervido");
+            if(timeMeasured == timeAddit[0]){
+            Lcd.clear();
+            Lcd.cursor(0.0);
+            Lcd.print("Adición"); 
+            Lcd.cursor(9.0) ;
+            Lcd.print(i);
+            alert();  
+            } 
+            if(timeMeasured == timeAddit[1]){
+            Lcd.clear();
+            Lcd.cursor(0.0);
+            Lcd.print("Adición"); 
+            Lcd.cursor(9.0) ;
+            Lcd.print(i);
+            alert();  
+            }  
+            if(timeMeasured == timeAddit[2]){
+            Lcd.clear();
+            Lcd.cursor(0.0);
+            Lcd.print("Adición"); 
+            Lcd.cursor(9.0) ;
+            Lcd.print(2);
+            alert();  
+            } 
+            if(timeMeasured == timeAddit[3]){
+            Lcd.clear();
+            Lcd.cursor(0.0);
+            Lcd.print("Adición"); 
+            Lcd.cursor(9.0) ;
+            Lcd.print(3);
+            alert();  
+            } 
+            if(timeMeasured == timeAddit[4]){
+            Lcd.clear();
+            Lcd.cursor(0.0);
+            Lcd.print("Adición"); 
+            Lcd.cursor(9.0) ;
+            Lcd.print(4);
+            alert();  
+            }    
+           
+            Lcd.cursor(0,0); // muestra datos
+            Lcd.print("Time=");
+            Lcd.print(timeMessured);
+            Lcd.cursor(0,9);
+            Lcd.print("TimO=");
+            Lcd.print(xTime);
+            Lcd.cursor(1,0);
+            Lcd.print("Etapa Hervido");
+        }
+         
+       
        
         
         }
