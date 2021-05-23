@@ -23,13 +23,19 @@ byte xTemp=0;
 
 //pins
 byte buzzer=11;
+int pulsador=a0;
 
 //app
 void setup(){
+
+        map pulsador(0,1023,0,255);
+
         pinMode(buzzer, OUTPUT);
 	lcd.begin();                      
 	lcd.backlight();
         Lcd.print("Iniciando...");
+
+
 
 
 	delay(5000);
@@ -250,6 +256,26 @@ void alarm(){
        tone(buzzer,220,250);
        delay(400);
     }
+}
+
+/----------------------------------------------
+
+void pulsoboton(){
+
+              If(pulsador>25 & pulsador<50){
+              enter=true;
+}
+              If(pulsador>75 & pulsador<100){
+              up=true;
+}
+              If(pulsador>125 & pulsador<150){
+              down=true;
+}
+              If(pulsador>175 & pulsador<200){
+              advance=true;
+}
+              If(pulsador>225 & pulsador<250){
+              back=true;
 }
 
 
