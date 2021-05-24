@@ -15,28 +15,28 @@ byte timeAddit []={255,255,255,255,255};
 byte xmash;
 
 //timming
-int timeInit=0;
-int timeCurrent=millis()/1000;
-int timeMeasured=0;
+
+unsigned long timeCurrent=millis();
+byte timeMeasured=0;
 byte xTime=0;
 byte xTemp=0;
 
 //pins
 byte buzzer=11;
-int pulsador=a0;
+int buttons=A0;
+
+//data
+int pushed;
 
 //app
 void setup(){
+    pushed=map(buttons,0,1023,0,255);
 
-        map pulsador(0,1023,0,255);
+    pinMode(buzzer, OUTPUT);
 
-        pinMode(buzzer, OUTPUT);
-	lcd.begin();                      
-	lcd.backlight();
-        Lcd.print("Iniciando...");
-
-
-
+	Lcd.begin();                      
+	Lcd.backlight();
+    Lcd.print("Iniciando...");
 
 	delay(5000);
 }
@@ -147,6 +147,7 @@ void boil(){
 
 
     while(temp < 100){
+        //RESISTENCE IN OFF
         Lcd.clear();
         Lcd.cursor(0.0);
         Lcd.print("Subiendo Temp.");
@@ -167,68 +168,36 @@ void boil(){
         Lcd.clear();
 
 
-    while(timeMeasured<=xTime){
-        if(timeConcurrent-timeInit<1){ //mide tiempo trnascurrido del proceso
-            timeMeasured++;
-            timeInit=timeConcurrent;
+    while(timeMeasured<xTime){
+        timeConcurrent = millis();
+        timeMeasured++;
+        for (int i = 0; i < 3; i++){
 
-            if(timeMeasured == timeAddit[0]){
-            Lcd.clear();
-            Lcd.cursor(0.0);
-            Lcd.print("Adición"); 
-            Lcd.cursor(9.0) ;
-            Lcd.print(i);
-            alert();  
-            } 
-            if(timeMeasured == timeAddit[1]){
-            Lcd.clear();
-            Lcd.cursor(0.0);
-            Lcd.print("Adición"); 
-            Lcd.cursor(9.0) ;
-            Lcd.print(i);
-            alert();  
-            }  
-            if(timeMeasured == timeAddit[2]){
-            Lcd.clear();
-            Lcd.cursor(0.0);
-            Lcd.print("Adición"); 
-            Lcd.cursor(9.0) ;
-            Lcd.print(2);
-            alert();  
-            } 
-            if(timeMeasured == timeAddit[3]){
-            Lcd.clear();
-            Lcd.cursor(0.0);
-            Lcd.print("Adición"); 
-            Lcd.cursor(9.0) ;
-            Lcd.print(3);
-            alert();  
-            } 
-            if(timeMeasured == timeAddit[4]){
-            Lcd.clear();
-            Lcd.cursor(0.0);
-            Lcd.print("Adición"); 
-            Lcd.cursor(9.0) ;
-            Lcd.print(4);
-            alert();  
-            }    
+            if(timeMeasured == timeAddit[i]){
+                      
+               Serial.println("adiccion");
+               Serial.print(i);
+               delay(3000);
+            }
+            if(timeMeasured != timeAddit[i]){
+                    
+                Serial.print("Time=");
+                Serial.println(timeMeasured);
+                Serial.print("TimO=");
+                Serial.println(xTime);
+                Serial.print("Etapa Hervido");
+                    
+            }
+            while(millis() < timeConcurrent+1000){
+            // espere [periodo] milisegundos
+            }
            
-            Lcd.cursor(0,0); // muestra datos
-            Lcd.print("Time=");
-            Lcd.print(timeMessured);
-            Lcd.cursor(0,9);
-            Lcd.print("TimO=");
-            Lcd.print(xTime);
-            Lcd.cursor(1,0);
-            Lcd.print("Etapa Hervido");
-        }
-         
-       
-       
-        
-        }
+            }
     }
+        timeMeasured=0;
+            
 }
+
 
 //----------------------------------------------
 
@@ -258,24 +227,25 @@ void alarm(){
     }
 }
 
-/----------------------------------------------
+//----------------------------------------------
 
 void pulsoboton(){
 
-              If(pulsador>25 & pulsador<50){
-              enter=true;
-}
-              If(pulsador>75 & pulsador<100){
-              up=true;
-}
-              If(pulsador>125 & pulsador<150){
-              down=true;
-}
-              If(pulsador>175 & pulsador<200){
-              advance=true;
-}
-              If(pulsador>225 & pulsador<250){
-              back=true;
+  if(pushed>25 && pushed<50){
+      data=0;//Enter
+    }
+  if(pushed>75 && pushed<100){
+      data=1;//Up
+    }
+  if(pushed>125 && pushed<150){
+      data=2;//Down
+    }
+  if(pushed>175 && pushed<200){
+      data=3;//Right
+    }
+  if(pushed>225 && pushed<250){
+      data=4;//Left
+    }
 }
 
 
