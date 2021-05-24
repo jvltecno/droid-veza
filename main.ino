@@ -60,7 +60,11 @@ void set(){
     Lcd.print("Ingrese el agua,");
     Lcd.cursor(1,0);
     Lcd.print("luego oprima OK");
-   
+
+    
+    if(pulsoBoton()==0){
+    void Menu();
+   }
 
 }
 void PID(){
@@ -68,7 +72,7 @@ void PID(){
 }
 //--------------------------------------------
 void mash(){
-	for(byte i=0;i<=xmash,i++){ //xmash es la cantidad 
+	for(byte i=0;i<=xmash;i++){ //xmash es la cantidad 
     //maxima de etapas elegidas 
         xTemp=mashTemp[i];
         xTime=mashTime[i];
@@ -229,22 +233,23 @@ void alarm(){
 
 //----------------------------------------------
 
-void pulsoboton(){
+int pulsoboton(){
+analogRead(buttons);
 
   if(pushed>25 && pushed<50){
-      data=0;//Enter
+     return 0;//Enter
     }
   if(pushed>75 && pushed<100){
-      data=1;//Up
+      return 1;//Up
     }
   if(pushed>125 && pushed<150){
-      data=2;//Down
+      return 2;//Down
     }
   if(pushed>175 && pushed<200){
-      data=3;//Right
+      return 3;//Right
     }
   if(pushed>225 && pushed<250){
-      data=4;//Left
+      return 4;//Left
     }
 }
 
