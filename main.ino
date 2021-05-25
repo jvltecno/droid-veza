@@ -8,10 +8,12 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);  // Inicia el LCD en la dirección 0x27, con
 byte mashTime[4];
 byte mashTemp[4];
 float temp;
-float tempWash;
-float tempTrans;
-byte timeBoil;
+byte tempWash;
+byte timeWash;
+byte tempTrans;
+byte timeBoil=60;
 byte timeAddit []={255,255,255,255,255};
+byte xaddit;
 byte xmash;
 
 //timming
@@ -52,23 +54,166 @@ void loop(){
 
 /*-------------------------------Functions------------------------------------------------------------------------------------*/
 void set(){
-   
     lcd.setCursor(0,0);
     lcd.print("   Bienvenido   ");
     lcd.setCursor(0,1);
     lcd.print(" a Droid-veza   ");
     delay(5000);
 
+    //water 
     do{
-    Lcd.print("Ingrese el agua,");
-    Lcd.cursor(1,0);
-    Lcd.print("luego oprima OK");
+        Lcd.print("Ingrese el agua,");
+        Lcd.cursor(1,0);
+        Lcd.print("luego oprima OK");
     }while(pulsoBoton()!=0);
 
+    delay(50);
+    //pashes of mash
+    Lcd.clear();
+    Lcd.print("Vamos a ");
+    Lcd.cursor(1,0);
+    Lcd.print("Programar");
+    delay(2000);
+    do{
+        Lcd.clear();
+        Lcd.print("Etapas de Mash ?");
+        Lcd.cursor(1,0);
+        Lcd.print("Maximo 5:");
+        Lcd.cursor(1,11);
+        Lcd.print(xmash);
+        if(pulsoboton()==1){
+            xmash++;
+        }
+        if (pulsoboton()==2)
+        {
+            xmash--; 
+        }
+    }while(pulsoboton()!=0 && xmash!=0);
+    for (int i =0;i<xmash;i++)
+    {
+        if(pulsoboton()==3){
+             i--;
+        }
+        do{
+            
+            Lcd.cursor(0,1);
+            Lcd.print("Etapa N:");
+            Lcd.print(i++);
+            Lcd.cursor(1,0);
+            Lcd.print("Time:");
+            if (pulsoboton()==1)
+            {
+                mashTime[i]++;
+            }
+            if (pulsoboton()==2)
+            {
+                mashTime[i]--;
+            }
+            Lcd.print(mashTime[i]);
+            Lcd.print("Temp:");
+
+        if(pulsoboton()==4){
+            Lcd.cursor(1,14);
+            if (pulsoboton()==1){
+                mashTemp[i]++;
+            }
+            if (pulsoboton()==2)
+            {
+                mashTemp[i]--;
+            }
+            Lcd.print(mashTemp[i]);
+        }
+
+        }while (pulsoboton()!=0); 
+
+        do
+        {
+            Lcd.cursor(0,0);
+            Lcd.print("Time Boil:");
+            Lcd.print(timeBoil),
+            if(pulsoboton()==1){
+                timeBoil++;
+            }
+            if (pulsonoton()==2)
+            {
+                timeBoil--;
+            }
+            if (pulsoboton()==4)
+            {
+                Lcd.cursor(0,1);
+                Lcd.print("Cant Addit:");
+                Lcd.print(xaddit);
+                if(pulsoboton()==1){
+                    xaddit++;
+                }
+                if (pulsonoton()==2)
+                {
+                    xaddit--;
+                }
+            }
+                      
+        } while (pulsoboton()!=0 && xaddit!=0 && timeBoil!=0);
+        for (int i = 0; i < xaddit; i++)
+        {
+            Lcd.cursor(0,0);
+            Lcd.print("Adicion N:");
+            Lcd.print(i++);
+
+            Lcd.cursor(0,1);
+            Lcd.print("Duracion:")
+            if (pulsoboton()==1)
+            {
+                timeAddit[i]++;
+            }
+            if (pulsoboton()==2)
+            {
+                timeAddit[i]--;
+            }
+            Lcd.print(timeAddit[i]);
+        }
+        
+            Lcd.cursor(0,0);
+            Lcd.print("Temp Lavado:");
+           do
+           {
+                if(pulsoboton()==1){
+                    tempWash++;
+                }
+                if(pulsoboton()==2)
+                {
+                    tempWash--;
+                }
+                Lcd.print(tempWash);
+           } while (tempWash==0 && pulsoboton()!=4);
+           
+
+            Lcd.cursor(1,0);
+            Lcd.print("Time Lavado:");
+            
+            do{
+                if(pulsoboton()==1){
+                    timeWash++;
+                }
+                if (pulsoboton()==2)
+                {
+                    timeWash--;
+                }
+                Lcd.print(timeWash);
+            } while (timeWash ==0 && pulsoboton()!=4);
+                
+            
+            
+
+       
+       
+
+        
+    }
     
-   }
 
 }
+
+
 void PID(){
     
 }
@@ -236,7 +381,7 @@ void alarm(){
 //----------------------------------------------
 
 int pulsoboton(){
-analogRead(buttons);
+    analogRead(buttons);
 
   if(pushed>25 && pushed<50){
        delay(50);
@@ -287,7 +432,8 @@ analogRead(buttons);
            else{
              return -1;
            }
-   }
+    }
+}
 
   
 
