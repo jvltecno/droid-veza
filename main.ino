@@ -52,18 +52,20 @@ void loop(){
 
 /*-------------------------------Functions------------------------------------------------------------------------------------*/
 void set(){
+   
     lcd.setCursor(0,0);
     lcd.print("   Bienvenido   ");
     lcd.setCursor(0,1);
     lcd.print(" a Droid-veza   ");
     delay(5000);
+
+    do{
     Lcd.print("Ingrese el agua,");
     Lcd.cursor(1,0);
     Lcd.print("luego oprima OK");
+    }while(pulsoBoton()!=0);
 
     
-    if(pulsoBoton()==0){
-    void Menu();
    }
 
 }
@@ -237,11 +239,26 @@ int pulsoboton(){
 analogRead(buttons);
 
   if(pushed>25 && pushed<50){
-     return 0;//Enter
-    }
+       delay(50);
+     if(pushed>25 && pushed<50){
+       return 0;
+     }//Enter
+          else{
+            return -1
+          }
+  }
+    
+
   if(pushed>75 && pushed<100){
-      return 1;//Up
-    }
+        delay(50);
+      if (pushed>75 && pushed<100){
+         return 1;
+      }//Up
+           else{
+             return -1;
+           }
+   }
+
   if(pushed>125 && pushed<150){
       return 2;//Down
     }
