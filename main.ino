@@ -26,6 +26,9 @@ byte xTemp=0;
 //pins
 byte buzzer=11;
 int buttons=A0;
+byte senWater=10;
+
+
 
 //data
 int pushed;
@@ -35,6 +38,7 @@ void setup(){
     pushed=map(buttons,0,1023,0,255);
 
     pinMode(buzzer, OUTPUT);
+    pinMode(senWater,INPUT);
 
 	Lcd.begin();                      
 	Lcd.backlight();
@@ -350,12 +354,59 @@ void boil(){
 }
 
 
-//----------------------------------------------
+//-----------------cooler-----------------------------
 
 void cooler(){
+         do{
+         Lcd.clear(),
+         Lcd.home();
+         Lcd.print("Vamos a enfriar");
+         Lcd.cursor(1,0);
+         Lcd.print("el Mosto");
+         delay(3000);
+         Lcd.clear();
+         Lcd.print("Conecte la Bomba");
+         Lcd.cursor(1,0);
+         Lcd.print("al sist. Frío");
+            }
+         while (pulsoboton()!=0);
+        do{
+         Lcd.clear();
+         Lcd.home();
+         Lcd.print("Encienda la ");
+         Lcd.cursor(1,0);
+         Lcd.print("bomba ");
+           }
+          while(pulsoboton()!=0;
+     while(Temp>TempTrans){
+        Lcd.clear();
+        Lcd.home();
+        Lcd.print("Enfriando Mosto");
+        Lcd.cursor(1.0);
+        Lcd.print("Temp:");
+        Lcd.cursor(1,6);
+        Lcd.print(temp);
+        Lcd.cursor(1,9);
+        Lcd.print(Sem:);
+        Lcd.cursor(1,13);
+        Lcd.print(TempTrans);
+      }
+     void alert();
+         do{
+         Lcd.clear();
+         Lcd.home();
+         Lcd.print("Apague la bomba");
+         Lcd.cursor(1,0);
+         Lcd.print(" y Trasvase  mosto");
+}while(senWater=1);
+        Lcd.clear();
+        Lcd.print("Listo por aquí...");
+        Lcd.cursor(1,0);
+        Lcs.print("¡Buenas 
+
 }
 
-//---------------------------------------------
+//----------------alert-----------------------------
 
 void alert(){
     tone(buzzer,880,500);
@@ -368,7 +419,7 @@ void alert(){
     noTone(buzzer);
 }
 
-//---------------------------------------------
+//--------------------alarm-------------------------
 
 void alarm(){
    for(int i,i=30,i++){
@@ -378,7 +429,7 @@ void alarm(){
     }
 }
 
-//----------------------------------------------
+//---------------push a button--------------------------
 
 int pulsoboton(){
     analogRead(buttons);
