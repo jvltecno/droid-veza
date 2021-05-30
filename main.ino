@@ -42,6 +42,7 @@ void setup(){
 
 	Lcd.begin();                      
 	Lcd.backlight();
+    Lcd.home();
     Lcd.print("Iniciando...");
 
 	delay(5000);
@@ -66,24 +67,34 @@ void set(){
 
     //water 
     do{
+       
         Lcd.print("Ingrese el agua,");
-        Lcd.cursor(1,0);
+        Lcd.setCursor(1,0);
         Lcd.print("luego oprima OK");
-    }while(pulsoBoton()!=0);
+      if(senWater=0){
+      alarm();
+      Lcd.clear();
+      Lcd.print("No hay agua...");
+      Lcd.setCursor(1.0);
+      Lcd.print("Revise por favor");
+      delay(2000);
+      }
 
+    }while(pulsoBoton()!=0 && senWater!=1);
+    
     delay(50);
     //pashes of mash
     Lcd.clear();
     Lcd.print("Vamos a ");
-    Lcd.cursor(1,0);
+    Lcd.setCursor(1,0);
     Lcd.print("Programar");
     delay(2000);
     do{
         Lcd.clear();
         Lcd.print("Etapas de Mash ?");
-        Lcd.cursor(1,0);
+        Lcd.setCursor(1,0);
         Lcd.print("Maximo 5:");
-        Lcd.cursor(1,11);
+        Lcd.setCursor(1,11);
         Lcd.print(xmash);
         if(pulsoboton()==1){
             xmash++;
@@ -100,10 +111,10 @@ void set(){
         }
         do{
             
-            Lcd.cursor(0,1);
+            Lcd.setCursor(0,1);
             Lcd.print("Etapa N:");
             Lcd.print(i++);
-            Lcd.cursor(1,0);
+            Lcd.setCursor(1,0);
             Lcd.print("Time:");
             if (pulsoboton()==1)
             {
@@ -117,7 +128,7 @@ void set(){
             Lcd.print("Temp:");
 
         if(pulsoboton()==4){
-            Lcd.cursor(1,14);
+            Lcd.setCursor(1,14);
             if (pulsoboton()==1){
                 mashTemp[i]++;
             }
@@ -132,7 +143,7 @@ void set(){
 
         do
         {
-            Lcd.cursor(0,0);
+            Lcd.setCursor(0,0);
             Lcd.print("Time Boil:");
             Lcd.print(timeBoil),
             if(pulsoboton()==1){
@@ -144,7 +155,7 @@ void set(){
             }
             if (pulsoboton()==4)
             {
-                Lcd.cursor(0,1);
+                Lcd.setCursor(0,1);
                 Lcd.print("Cant Addit:");
                 Lcd.print(xaddit);
                 if(pulsoboton()==1){
@@ -159,11 +170,11 @@ void set(){
         } while (pulsoboton()!=0 && xaddit!=0 && timeBoil!=0);
         for (int i = 0; i < xaddit; i++)
         {
-            Lcd.cursor(0,0);
+            Lcd.setCursor(0,0);
             Lcd.print("Adicion N:");
             Lcd.print(i++);
 
-            Lcd.cursor(0,1);
+            Lcd.setCursor(0,1);
             Lcd.print("Duracion:")
             if (pulsoboton()==1)
             {
@@ -176,7 +187,7 @@ void set(){
             Lcd.print(timeAddit[i]);
         }
         
-            Lcd.cursor(0,0);
+            Lcd.setCursor(0,0);
             Lcd.print("Temp Lavado:");
            do
            {
@@ -191,7 +202,7 @@ void set(){
            } while (tempWash==0 && pulsoboton()!=4);
            
 
-            Lcd.cursor(1,0);
+            Lcd.setCursor(1,0);
             Lcd.print("Time Lavado:");
             
             do{
@@ -229,13 +240,13 @@ void mash(){
         xTime=mashTime[i];
         while(temp<xTemp){
     	    Lcd.clear();
-            Lcd.cursor(0.0);
+            Lcd.setCursor(0.0);
             Lcd.print("Subiendo Temp.");
             PID(xtemp);
-            Lcd.cursor(1,0);
+            Lcd.setCursor(1,0);
             Lcd.print("Temp=");
             Lcd.print(temp);
-            Lcd.cursor(0,9);
+            Lcd.setCursor(0,9);
             Lcd.print("TemO=");
             Lcd.print(xTemp);
             delay(1000);
@@ -244,14 +255,14 @@ void mash(){
         {
             Lcd.clear();
             Lcd.print("Por favor");
-            Lcd.cursor(1,0);
+            Lcd.setCursor(1,0);
             Lcd.print("encender Bomba");
 
         }
         
         Lcd.clear();
         Lcd.print("Iniciando Etapa");
-        Lcd.cursor(1,0);
+        Lcd.setCursor(1,0);
         Lcd.print("Mash:");
         Lcd.print(i++);
         delay(2000);
@@ -265,18 +276,18 @@ void mash(){
        		    timeInit=timeConcurrent;
       
 		        // muesra datos
-       		    Lcd.cursor(0,0); 
+       		    Lcd.setCursor(0,0); 
        		    Lcd.print("Etapa");
        		    Lcd.print(y);
-       		    Lcd.cursor(0,9);
+       		    Lcd.setCursor(0,9);
        		    Lcd.print("Time:");
        		    Lcd.print(timeMessured);
-    	        Lcd.cursor(1,0);
+    	            Lcd.setCursor(1,0);
        		    Lcd.print("Temp=");
        		    Lcd.print(temp);
-       		    Lcd.cursor(0,9);
-      	        Lcd.print("TemO=");
-      	        Lcd.print(xTemp);
+       		    Lcd.setCursor(0,9);
+      	            Lcd.print("TemO=");
+      	            Lcd.print(xTemp);
 
     	    }
             PID();
@@ -297,26 +308,26 @@ void boil(){
 
     Lcd.clear();
     Lcd.print("Por favor");
-    Lcd.cursor(1,0);
+    Lcd.setCursor(1,0);
     Lcd print("apagar Bomba");
 
 
     while(temp < 100){
         //RESISTENCE IN OFF
         Lcd.clear();
-        Lcd.cursor(0.0);
+        Lcd.setCursor(0.0);
         Lcd.print("Subiendo Temp.");
-        Lcd.cursor(1,0);
+        Lcd.setCursor(1,0);
         Lcd.print("Temp=");
         Lcd.print(temp);
-        Lcd.cursor(0,9);
+        Lcd.setCursor(0,9);
         Lcd.print("TemO=");
         Lcd.print(xTemp);
     }
 
         Lcd.clear();
         Lcd.print("Iniciando Etapa");
-        Lcd.cursor(1,0);
+        Lcd.setCursor(1,0);
         Lcd.print("Hervido");
         Lcd print(y);
         delay(2000);
@@ -361,12 +372,12 @@ void cooler(){
          Lcd.clear(),
          Lcd.home();
          Lcd.print("Vamos a enfriar");
-         Lcd.cursor(1,0);
+         Lcd.setCursor(1,0);
          Lcd.print("el Mosto");
          delay(3000);
          Lcd.clear();
          Lcd.print("Conecte la Bomba");
-         Lcd.cursor(1,0);
+         Lcd.setCursor(1,0);
          Lcd.print("al sist. Frío");
             }
          while (pulsoboton()!=0);
@@ -374,7 +385,7 @@ void cooler(){
          Lcd.clear();
          Lcd.home();
          Lcd.print("Encienda la ");
-         Lcd.cursor(1,0);
+         Lcd.setCursor(1,0);
          Lcd.print("bomba ");
            }
           while(pulsoboton()!=0;
@@ -382,13 +393,13 @@ void cooler(){
         Lcd.clear();
         Lcd.home();
         Lcd.print("Enfriando Mosto");
-        Lcd.cursor(1.0);
+        Lcd.setCursor(1.0);
         Lcd.print("Temp:");
-        Lcd.cursor(1,6);
+        Lcd.setCursor(1,6);
         Lcd.print(temp);
-        Lcd.cursor(1,9);
+        Lcd.setCursor(1,9);
         Lcd.print(Sem:);
-        Lcd.cursor(1,13);
+        Lcd.setCursor(1,13);
         Lcd.print(TempTrans);
       }
      void alert();
@@ -396,13 +407,13 @@ void cooler(){
          Lcd.clear();
          Lcd.home();
          Lcd.print("Apague la bomba");
-         Lcd.cursor(1,0);
+         Lcd.setCursor(1,0);
          Lcd.print(" y Trasvase  mosto");
 }while(senWater=1);
         Lcd.clear();
         Lcd.print("Listo por aquí...");
-        Lcd.cursor(1,0);
-        Lcs.print("¡Buenas 
+        Lcd.setCursor(1,0);
+        Lcd.print("¡Buenas Birras!");
 
 }
 
