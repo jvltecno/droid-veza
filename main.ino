@@ -27,11 +27,33 @@ byte xTemp=0;
 byte buzzer=11;
 int buttons=A0;
 byte senWater=10;
-
-
+byte firing = 3;
+byte zero_cross = 8;
 
 //data
 int pushed;
+
+
+//PID
+unsigned long previousMillis = 0; 
+unsigned long currentMillis = 0;
+int temp_read_Delay = 500;
+int real_temperature = 0;
+int setpoint = 100;
+
+float PID_error = 0;
+float previous_error = 0;
+float elapsedTime, Time, timePrev;
+int PID_value = 0;
+
+//PID constants
+int kp = 203; 
+int ki= 7.2;  
+int kd = 1.04;
+int PID_p = 0;    
+int PID_i = 0;    
+int PID_d = 0;
+
 
 //app
 void setup(){
@@ -39,8 +61,15 @@ void setup(){
 
     pinMode(buzzer, OUTPUT);
     pinMode(senWater,INPUT);
-
-	Lcd.begin();                      
+    pinMode(firing, OUTPUT);
+    pinMode(zero_cross,INPUT);
+//Interruptions
+    PCICR |= (1 << PCIE0);   
+ //enable PCMSK0 scan                                                 
+    PCMSK0 |= (1 << PCINT0);  
+//Set pin D8 (zero cross input) trigger an interrupt on state change.
+	
+        Lcd.begin();                      
 	Lcd.backlight();
     Lcd.home();
     Lcd.print("Iniciando...");
@@ -229,8 +258,41 @@ void set(){
 }
 
 
-void PID(){
+void PID(setpoint){
+    currentMillis=millis();
+    if(currentMillis - previousMillis >= temp_read_Delay){
+    previousMillis += temp_read_Delay;              //Increase the previous time for next loop
+    real_temperature = temp();  //get the real temperature in Celsius degrees
+
+    PID_error = setpoint - real_temperature;        //Calculate the pid ERROR
     
+    if(PID_error > 30)                              //integral constant will only affect errors below 30ºC             
+    {PID_i = 0;}
+    
+    PID_p = kp * PID_error;                         //Calculate the P value
+    PID_i = PID_i + (ki * PID_error);               //Calculate the I value
+    timePrev = Time;                    // the previous time is stored before the actual time read
+    Time = millis();                    // actual time read
+    elapsedTime = (Time - timePrev) / 1000;   
+    PID_d = kd*((PID_error - previous_error)/elapsedTime);  //Calculate the D value
+    PID_value = PID_p + PID_i + PID_d;                      //Calculate total PID value
+
+    //We define firing delay range between 0 and 7400. Read above why 7400!!!!!!!
+    if(PID_value < 0)
+    {      PID_value = 0;       }
+    if(PID_value > 7400)
+    {      PID_value = 7400;    }
+previous_error = PID_error;
+}
+  //If the zero cross interruption was detected we create the 100us firing pulse  
+  if (zero_cross_detected)     
+    {
+      delayMicroseconds(maximum_firing_delay - PID_value); //This delay controls the power
+      digitalWrite(firing_pin,HIGH);
+      delayMicroseconds(100);
+      digitalWrite(firing_pin,LOW);
+      zero_cross_detected = false;
+    } 
 }
 //--------------------------------------------
 void mash(){
@@ -270,10 +332,9 @@ void mash(){
 
         alert();
 	       
-	    while(timeMeasured<=xTime){
-  	        if(timeConcurrent-timeInit<1){ //mide tiempo trnascurrido del proceso
-       		    timeMeasured++;
-       		    timeInit=timeConcurrent;
+	    while(timeMeasured<xTime){
+               timeConcurrent = millis();
+                 timeMeasured++;
       
 		        // muesra datos
        		    Lcd.setCursor(0,0); 
@@ -290,7 +351,10 @@ void mash(){
       	            Lcd.print(xTemp);
 
     	    }
-            PID();
+            PID(xTemp);
+            while(millis() < timeConcurrent+1000){
+            // espere [periodo] milisegundos
+            }
         }
     }
 }
@@ -323,6 +387,7 @@ void boil(){
         Lcd.setCursor(0,9);
         Lcd.print("TemO=");
         Lcd.print(xTemp);
+        //Poner resistencia al maximo
     }
 
         Lcd.clear();
@@ -494,6 +559,19 @@ int pulsoboton(){
            else{
              return -1;
            }
+    }
+}
+
+ISR(PCINT0_vect){
+  ///////////////////////////////////////Input from optocoupler
+  if(PINB & B00000001){            //We make an AND with the state register, We verify if pin D8 is HIGH???
+    if(last_CH1_state == 0){       //If the last state was 0, then we have a state change...
+      zero_cross_detected = true;  //We have detected a state change! We need both falling and rising edges
+    }
+  }
+  else if(last_CH1_state == 1){    //If pin 8 is LOW and the last state was HIGH then we have a state change      
+    zero_cross_detected = true;    //We haev detected a state change!  We need both falling and rising edges.
+    last_CH1_state = 0;            //Store the current state into the last state for the next loop
     }
 }
 
