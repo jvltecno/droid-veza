@@ -7,7 +7,6 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);  // Inicia el LCD en la dirección 0x27, con
 
 byte mashTime[4];
 byte mashTemp[4];
-float temp;
 byte tempWash;
 byte timeWash;
 byte tempTrans;
@@ -38,7 +37,7 @@ int pushed;
 unsigned long previousMillis = 0; 
 unsigned long currentMillis = 0;
 int temp_read_Delay = 500;
-int real_temperature = 0;
+float real_temperature = 0;
 int setpoint = 100;
 
 float PID_error = 0;
@@ -575,6 +574,8 @@ ISR(PCINT0_vect){
     }
 }
 
-  
+/-------temperature meassure----------------
 
-
+void temp(){
+real_temperature=analogRead(A1);
+}
